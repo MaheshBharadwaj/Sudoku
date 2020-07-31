@@ -1,0 +1,13 @@
+#ignore dataset
+sudoku_dataset/
+
+#ignore h5 files
+*.h5
+
+#Ignore cache
+__pycache__/
+
+#Ignore images
+*.png
+*.jpg
+*.jpeg
