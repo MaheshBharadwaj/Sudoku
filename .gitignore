@@ -4,8 +4,12 @@ sudoku_dataset/
 #ignore h5 files
 *.h5
 
+#ignore zip
+*.zip
+
 #Ignore cache
 __pycache__/
+.ipynb_checkpoints/
 
 #Ignore images
 *.png

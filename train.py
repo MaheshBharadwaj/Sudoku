@@ -22,9 +22,6 @@ import source.utils as utils
 
 
 def main():
-	stream = os.popen('git clone https://github.com/wichtounet/sudoku_dataset/')
-
-
 	df = pd.read_csv('./sudoku_dataset/outlines_sorted.csv')
 
 	# Strip extension from path
@@ -37,7 +34,10 @@ def main():
 
 	for i in tqdm(range(df.shape[0])):
 		path = str(df.iloc[i, 0])
-		X.append(utils.process_image(path + '.jpg'))
+		processed_img = utils.process_image(path + '.jpg')
+		if processed_img is None:
+			continue
+		X.append(processed_img)
 		y.append(utils.ground_truth(path + '.dat'))
 
 
@@ -119,7 +119,6 @@ def main():
 					validation_data=(d_test, v_test),
 					epochs=300,
 					callbacks=[LR_reduce, ES_monitor, utils.myCallback()])
-		model.save('model.h5')
 		plt.plot(history.history['accuracy'])
 		plt.plot(history.history['val_accuracy'])
 		plt.title('Model accuracy')
@@ -138,6 +137,11 @@ def main():
 		plt.xlabel('No. epoch')
 		plt.legend(loc="upper left")
 		plt.savefig('Loss.png')
+		
+		model.fit(d_test, v_test, batch_size=64, epochs=5,
+			callbacks=[utils.myCallback()])
+
+		model.save('model.h5')
 		
 
 	v_pred = model.predict(d_test)
@@ -167,8 +171,8 @@ def main():
 
 	print('Accuracy: ', (accurate/total))
 
-	utils.get_sudoku('./test1.jpeg', model)
-	utils.get_sudoku('./test2.jpg', model)
-	utils.get_sudoku('./test3.jpeg', model)
+	print(utils.get_sudoku('./test1.jpeg', model))
+	print(utils.get_sudoku('./test2.jpg', model))
+	print(utils.get_sudoku('./test3.jpeg', model))
 if __name__ == '__main__':
 	main()
