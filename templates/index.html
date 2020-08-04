@@ -31,8 +31,10 @@
 <span class="tb-col">│</span>                       <span class="tb-col">│</span>
 <span class="tb-border">+-----------------------+</span>
     </div>
-    <form method=post enctype=multipart/form-data class="file-btn btn-lg btn-light">    
-    <input type="file" name="file" title=" "/>
+    <form action = "http://localhost:5000/uploader" method = "POST"
+         enctype = "multipart/form-data" class="file-btn btn-lg btn-light"> 
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
     </form>
   </main>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

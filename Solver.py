@@ -141,7 +141,7 @@ def main(argv):
             # sudoku.Print_board()
             print()
             print(en-st,"seconds")
-
+            os.system("rm "+argv[1])
 
     except InsuffientArguments:
         print('Please enter filename of image as argument!', file=stderr)
