@@ -1,5 +1,18 @@
 from copy import *
 from time import *
+from flask import *
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    main()
+    return redirect(url_for('print_board'))
+
+@app.route('/print')
+def print_board():
+    print(session.get('board'))
+    return render_template('login.html', board = session.get('board'))
 
 class Sudoku():
     def __init__(self, board):
@@ -29,6 +42,7 @@ class Sudoku():
                 if(j%3 == 2 and j != 8): print("|", end = " ")
             print()
             if(i%3 == 2 and i != 8): print(("-"*6)+"+"+("-"*7)+"+"+("-"*7))
+        session['board'] = self.board
 
     def options(self, i, j):
         msk = self.rows[i]|self.cols[j]|self.boxes[(i//3)*3+(j//3)]
@@ -109,4 +123,5 @@ def main():
     print(en-st,"seconds")
 
 if __name__ == '__main__':
-    main()
+    app.secret_key = 'some key'
+    app.run(debug = True)
