@@ -1,0 +1,39 @@
+body {
+  background-color: #282a36; }
+
+h1, h2, h3, h4 {
+  color: #eeeeee; }
+
+header {
+  padding: 1rem;
+  background: #121319; }
+  header h1 {
+    font-size: 4rem;
+    text-align: center; }
+
+main .sudoku {
+  white-space: pre;
+  font-family: monospace !important;
+  text-align: center;
+  color: white;
+  background: #282a36;
+  font-size: 2rem; }
+
+main .file-btn {
+  width: 135px;
+  display: block;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto; }
+
+span.tb-border, span.tb-col {
+  color: #DD1717; }
+
+span.tb-text1 {
+  color: #f1fa8c; }
+
+span.tb-text2 {
+  color: #8be9fd; }
+
+span.tb-text3 {
+  color: #bd93f9; }

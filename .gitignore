@@ -15,3 +15,7 @@ __pycache__/
 *.png
 *.jpg
 *.jpeg
+
+
+#Node
+node_modules/
