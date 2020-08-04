@@ -13,29 +13,31 @@ class myCallback(tf.keras.callbacks.Callback):
 
 def process_image(path: str):
     # Load image
-    img = cv2.imread(path)
+    try:
+        img = cv2.imread(path)
 
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = cv2.adaptiveThreshold(img.astype(np.uint8), 255, cv2.ADAPTIVE_THRESH_MEAN_C,
-                                cv2.THRESH_BINARY, 11, 3)
-    img = 255 - img
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
-    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = cv2.adaptiveThreshold(img.astype(np.uint8), 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+                                    cv2.THRESH_BINARY, 11, 3)
+        img = 255 - img
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
+        img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 
-    contours, h = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    max_contour = max(contours, key=cv2.contourArea)
-    x, y, w, h = cv2.boundingRect(max_contour)
-    img = img[y:y + h, x:x + w]
-    img = cv2.resize(img, (288, 288), interpolation=cv2.INTER_AREA)
-    img2 = img.copy()
-    largest = helpers.largest4SideContour(img2)
-    app = helpers.approx(largest)
-    if app is None:
+        contours, h = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        max_contour = max(contours, key=cv2.contourArea)
+        x, y, w, h = cv2.boundingRect(max_contour)
+        img = img[y:y + h, x:x + w]
+        img = cv2.resize(img, (288, 288), interpolation=cv2.INTER_AREA)
+        img2 = img.copy()
+        largest = helpers.largest4SideContour(img2)
+        app = helpers.approx(largest)
+        if app is None:
+            return img
+        corners = helpers.get_rectangle_corners(app)
+        img = helpers.warp_perspective(corners, img)
         return img
-    corners = helpers.get_rectangle_corners(app)
-    img = helpers.warp_perspective(corners, img)
-    return img
-
+    except Exception:
+        return None
 
 def ground_truth(path: str):
     with(open(path, 'r')) as fin:
@@ -113,4 +115,4 @@ def get_sudoku(path: str, model):
     v_pred = model.predict(cells)
     v_pred = np.argmax(v_pred, axis=1)
     sudoku_ext = np.reshape(v_pred, (9, 9))
-    print(sudoku_ext)
+    return sudoku_ext
