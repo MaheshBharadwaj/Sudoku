@@ -21,7 +21,7 @@ def upload():
 		f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
 
 		print('Filename: ', f.filename,'#')
-		solve(f.filename)
+		board = solve(f.filename)
 		return "solved"
 		
 if __name__ == '__main__':

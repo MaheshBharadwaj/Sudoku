@@ -126,7 +126,7 @@ def main(path: str):
         if not os.path.exists(ROOT_DIR + '/temp/' + path):
             raise FileNotFoundException(ROOT_DIR + '/temp/' + path)
 
-        extracted_sudoku = utils.get_sudoku(path, model)
+        extracted_sudoku = utils.get_sudoku(ROOT_DIR + '/temp/' + path, model)
         sudoku = Sudoku(extracted_sudoku)
         sudoku.Print_board()
         print('\n\n')
@@ -148,6 +148,8 @@ def main(path: str):
     
     except FileNotFoundException as e:
         print(str(e), file=stderr)
+
+    return sudoku.board
 
 if __name__ == '__main__':
     main(argv[1])
