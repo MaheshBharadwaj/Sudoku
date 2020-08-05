@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = ROOT_DIR + '/static/temp'
+UPLOAD_FOLDER = ROOT_DIR + '/static/temp/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__, static_folder='static/')
@@ -25,4 +25,4 @@ def upload():
 		return "solved"
 		
 if __name__ == '__main__':
-   app.run()
+	app.run(debug = True)
