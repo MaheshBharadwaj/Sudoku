@@ -4,7 +4,7 @@
   "description": "Webapp to solve sudoku images",
   "main": "index.js",
   "scripts": {
-    "sass": "node-sass -w templates/scss -o templates/css --recursive",
+    "sass": "node-sass -w static/scss -o static/css --recursive",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

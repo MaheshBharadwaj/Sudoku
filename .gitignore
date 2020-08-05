@@ -1,8 +1,6 @@
 #ignore dataset
 sudoku_dataset/
 
-#ignore h5 files
-*.h5
 
 #ignore zip
 *.zip

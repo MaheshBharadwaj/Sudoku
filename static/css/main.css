@@ -18,13 +18,19 @@ main .sudoku {
   color: white;
   background: #282a36;
   font-size: 2rem; }
+  @media (max-width: 425px) {
+    main .sudoku {
+      font-size: 18px; } }
 
-main .file-btn {
-  width: 135px;
-  display: block;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto; }
+main .load {
+  width: 29%;
+  margin: 0 auto; }
+  @media (max-width: 425px) {
+    main .load {
+      width: 100%; } }
+
+form .form-inline {
+  display: inline-block !important; }
 
 span.tb-border, span.tb-col {
   color: #DD1717; }

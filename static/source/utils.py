@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-import source.helpers as helpers
+import static.source.helpers as helpers
 import tensorflow as tf
 
 

@@ -9,7 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <title>SudokuSolver.io</title>
 </head>
 
@@ -30,13 +30,23 @@
 <span class="tb-col">│</span>                       <span class="tb-col">│</span>
 <span class="tb-col">│</span>                       <span class="tb-col">│</span>
 <span class="tb-border">+-----------------------+</span>
-    </div>
-    <form action = "http://localhost:5000/uploader" method = "POST"
-         enctype = "multipart/form-data" class="file-btn btn-lg btn-light"> 
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
+  </div>
+  <div class="load">
+    <form action="http://localhost:5000/uploader" method="POST" enctype="multipart/form-data" class="form-inline">
+      <div class="input-group">
+        <div class="input-group">
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file" name="file">
+          <label class="custom-file-label" for="file" id='customLabel'>Choose file</label>
+        </div>
+        </div>
+      </div>
     </form>
-  </main>
+  </div>
+1  </main>
+ 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
@@ -46,6 +56,23 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      $(document).ready(
+      function(){
+          $('input:submit').attr('disabled',true);
+          $('input:file').change(
+              function(){
+                  if ($(this).val()){
+                      $('input:submit').removeAttr('disabled'); 
+                      document.getElementById("customLabel").innerHTML = $(this).val().split("\\").pop();
+                  }
+                  else {
+                      $('input:submit').attr('disabled',true);
+                  }
+              });
+      });
+  
+    </script>
 </body>
 
 </html>

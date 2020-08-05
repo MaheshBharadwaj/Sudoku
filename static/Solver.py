@@ -7,13 +7,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 import tensorflow.keras as keras
 
-import source.utils as utils
+import static.source.utils as utils
 
 from sys import stderr,argv
 from copy import deepcopy
 from time import time
 
-from source.Exceptions import *
+from static.source.Exceptions import *
 
 class Sudoku():
     def __init__(self, board):
@@ -114,43 +114,40 @@ def get_input():
     return board
 
 
-def main(argv):
-
+def main(path: str):
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
     try:
-        if len(argv) < 2:
-            raise InsuffientArguments
-
-        if not os.path.exists('./model.h5'):
+        if not os.path.exists(ROOT_DIR + '/model.h5'):
             raise ModelNotFoundException
 
         #Loading Model
-        model = keras.models.load_model('./model.h5')
+        model = keras.models.load_model(ROOT_DIR + '/model.h5')
 
-        for path in argv[1:]:
-            if not os.path.exists(path):
-                raise FileNotFoundException(path)
+        if not os.path.exists(ROOT_DIR + '/temp/' + path):
+            raise FileNotFoundException(ROOT_DIR + '/temp/' + path)
 
-            extracted_sudoku = utils.get_sudoku(path, model)
-            sudoku = Sudoku(extracted_sudoku)
-            sudoku.Print_board()
-            print('\n\n')
-            st = time()
-            solve(sudoku)
-            print('\n\n')
-            en = time()
-            # sudoku.Print_board()
-            print()
-            print(en-st,"seconds")
-            os.system("rm "+argv[1])
+        extracted_sudoku = utils.get_sudoku(path, model)
+        sudoku = Sudoku(extracted_sudoku)
+        sudoku.Print_board()
+        print('\n\n')
+        st = time()
+        solve(sudoku)
+        print('\n\n')
+        en = time()
+        # sudoku.Print_board()
+        print()
+        print(en-st,"seconds")
+        os.system("rm "+ROOT_DIR + '/temp/' + path)
 
     except InsuffientArguments:
         print('Please enter filename of image as argument!', file=stderr)
 
     except ModelNotFoundException:
+        print('Searching for model in: ', os.getcwd())
         print('Please train the model by running \'train.py\'!', file=stderr)
     
     except FileNotFoundException as e:
         print(str(e), file=stderr)
 
 if __name__ == '__main__':
-    main(argv)
+    main(argv[1])
