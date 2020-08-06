@@ -16,7 +16,7 @@ solved_board = None
 @app.route('/', methods=['GET'])
 def upload_file():
 	if request.method == 'GET':
-		return render_template('index.html')
+		return render_template('index.html', invalid=0)
 
 
 @app.route('/puzzle', methods=['GET', 'POST'])
@@ -26,13 +26,13 @@ def upload():
 	global ALLOWED_EXTENSIONS
 	if request.method == 'POST':
 		f = request.files['file']
+		name, ext = f.filename.split('.')
+		if ext not in ALLOWED_EXTENSIONS:
+			return render_template('index.html', invalid_file = 1)
 		f.save(os.path.join(
 			app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
 
-		print('Filename: ', f.filename, '#')
-		name, ext = f.filename.split('.')
-		if ext not in ALLOWED_EXTENSIONS:
-			return render_template('index.html', invalid_file = 1) 
+		 
 		board, solved_board = solve(f.filename)
 		if board is None: 
 			return render_template('index.html', invalid_file = 1) 

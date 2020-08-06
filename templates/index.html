@@ -11,11 +11,23 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="https://fast.fonts.net/cssapi/05893941-af1d-4c96-a1d0-0e0cb5b76cc2.css">
-
-  <title>SudokuSolver.io</title>
+  {% if invalid_file %}
+  <script type="text/javascript">
+    function popup(){
+      alert('Please Check Your input file!');
+    }
+  </script>
+  {% else %}
+  <script type="text/javascript">
+    function popup(){
+      ;
+    }
+  </script>
+  {% endif %}
+<title>SudokuSolver.io</title>
 </head>
 
-<body>
+<body onload="popup()">
   <header>
     <h1>Sudoku Solver</h1>
   </header>
