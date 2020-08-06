@@ -5,7 +5,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = ROOT_DIR + '/static/temp/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='static/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -29,10 +29,13 @@ def upload():
 			app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
 
 		print('Filename: ', f.filename, '#')
+		name, ext = f.filename.split('.')
 		board, solved_board = solve(f.filename)
+		if board == None or ext not in ALLOWED_EXTENSIONS: 
+			return render_template('index.html', invalid_file = 1) 
 		return render_template('solution.html', board=board, button=1)
 	else:
-		return render_template('index.html')
+		return render_template('index.html', invalid_file = 0)
 
 
 @app.route('/check', methods=['GET', 'POST'])

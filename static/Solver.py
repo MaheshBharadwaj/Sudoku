@@ -137,13 +137,14 @@ def main(path: str):
         sudoku.Print_board()
         print('\n\n')
         st = time()
-        solve(sudoku)
+        check = solve(sudoku)
         print('\n\n')
         en = time()
         # sudoku.Print_board()
         print()
         print(en-st,"seconds")
         os.system("rm "+ROOT_DIR + '/temp/' + path)
+        if(check == False or sudoku.solvable == False): return None, None
         return extracted_sudoku, solved_board
 
     except InsuffientArguments:
