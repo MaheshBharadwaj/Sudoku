@@ -23,6 +23,7 @@ def upload_file():
 def upload():
 	global board
 	global solved_board
+	global ALLOWED_EXTENSIONS
 	if request.method == 'POST':
 		f = request.files['file']
 		f.save(os.path.join(
@@ -30,8 +31,10 @@ def upload():
 
 		print('Filename: ', f.filename, '#')
 		name, ext = f.filename.split('.')
+		if ext not in ALLOWED_EXTENSIONS:
+			return render_template('index.html', invalid_file = 1) 
 		board, solved_board = solve(f.filename)
-		if board == None or ext not in ALLOWED_EXTENSIONS: 
+		if board is None: 
 			return render_template('index.html', invalid_file = 1) 
 		return render_template('solution.html', board=board, button=1)
 	else:

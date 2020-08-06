@@ -16,6 +16,7 @@ from time import time
 from static.source.Exceptions import *
 
 solved_board = [[]]
+check = False
 
 class Sudoku():
     def __init__(self, board):
@@ -30,17 +31,19 @@ class Sudoku():
                 val = self.board[i][j]
                 if(val != 0):
                     msk = (1<<(val-1))
+                    if((self.rows[i]&msk) or (self.cols[j]&msk) or (self.boxes[(i//3)*3+(j//3)]&msk)): self.solvable = False
                     self.rows[i] ^= msk
                     self.cols[j] ^= msk
                     self.boxes[(i//3)*3+(j//3)] ^= msk
-                    if(self.rows[i] or self.cols[j] or self.boxes[(i//3)*3+(j//3)]): self.solvable = False
 
     def Solvable(self):
         return self.solvable
 
     def Print_board(self):
         global solved_board
+        global check
         solved_board = self.board
+        check = True
         for i in range(self.n):
             for j in range(self.n):
                 print(self.board[i][j], end = " ")
@@ -133,11 +136,12 @@ def main(path: str):
 
         extracted_sudoku = utils.get_sudoku(ROOT_DIR + '/temp/' + path, model)
         sudoku = Sudoku(extracted_sudoku)
+        print(check, sudoku.solvable)
         solved_board = extracted_sudoku
         sudoku.Print_board()
         print('\n\n')
         st = time()
-        check = solve(sudoku)
+        solve(sudoku)
         print('\n\n')
         en = time()
         # sudoku.Print_board()
