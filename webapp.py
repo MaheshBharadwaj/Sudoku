@@ -9,25 +9,66 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__, static_folder='static/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+board = None
+solved_board = None
 
-@app.route('/')
+
+@app.route('/', methods=['GET'])
 def upload_file():
-	return render_template('index.html')
-	
-@app.route('/uploader', methods = ['POST'])
+	if request.method == 'GET':
+		return render_template('index.html')
+
+
+@app.route('/puzzle', methods=['GET', 'POST'])
 def upload():
+	global board
+	global solved_board
 	if request.method == 'POST':
 		f = request.files['file']
-		f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+		f.save(os.path.join(
+			app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
 
-		print('Filename: ', f.filename,'#')
-		board = solve(f.filename)
-		return render_template('print.html', board = board)
+		print('Filename: ', f.filename, '#')
+		board, solved_board = solve(f.filename)
+		return render_template('solution.html', board=board, button=1)
+	else:
+		return render_template('index.html')
 
-@app.route('/check', methods = ['POST'])
+
+@app.route('/check', methods=['GET', 'POST'])
 def check():
-	print()
-	return
-		
+	global board
+	if request.method == 'POST':
+		user_input = request.form
+
+		for key in user_input.keys():
+			i, j = tuple(map(int, key.split('-')))
+			try:
+				board[i][j] = int(user_input[key])
+			except:
+				board[i][j] = 0
+
+		print(board)
+		correct = 1
+		for i in range(9):
+			for j in range(9):
+				if board[i][j] != solved_board[i][j]:
+					correct = 0
+					break
+		print(correct)
+		if correct:
+			return render_template('success.html', board=solved_board)
+		return render_template('failure.html', board=solved_board)
+
+	if request.method == 'GET':
+		return redirect(url_for('upload_file'))
+
+
+@app.route('/solution', methods=['GET'])
+def solution():
+	if request.method == 'GET':
+		return render_template('solution.html', board=solved_board, button=0)
+
+
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug=True)

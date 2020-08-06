@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="https://fast.fonts.net/cssapi/05893941-af1d-4c96-a1d0-0e0cb5b76cc2.css">
+
   <title>SudokuSolver.io</title>
 </head>
 
@@ -18,35 +20,36 @@
     <h1>Sudoku Solver</h1>
   </header>
   <main>
-    <div class="sudoku">
-<span class="tb-border">+-----------------------+</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-col">│</span>        <span class="tb-text1">𝚆𝙴𝙻𝙲𝙾𝙼𝙴</span>        <span class="tb-col">│</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-col">│</span>           <span class="tb-text2">TO</span>          <span class="tb-col">│</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-col">│</span>     <span class="tb-text3">SUDOKU SOLVER</span>     <span class="tb-col">│</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-col">│</span>                       <span class="tb-col">│</span>
-<span class="tb-border">+-----------------------+</span>
-  </div>
-  <div class="load">
-    <form action="http://localhost:5000/uploader" method="POST" enctype="multipart/form-data" class="form-inline">
-      <div class="input-group">
-        <div class="input-group">
-          <input class="btn btn-primary" type="submit" value="Submit">
-        </div>
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="file" name="file">
-          <label class="custom-file-label" for="file" id='customLabel'>Choose file</label>
-        </div>
-        </div>
+    <div class="st">
+
+      <div class="st-top">
+        <div class="st-bound st-bound-full"></div>
+        <p><span class="st-drop st-stranger-s">S</span><span class="st-stranger-t">u</span><span
+            class="st-stranger-r">-</span><span class="st-stranger-a">d</span><span class="st-stranger-n">o</span><span
+            class="st-stranger-g">-</span><span class="st-stranger-e">k</span><span
+            class="st-drop st-stranger-r-2">u</span>
+        </p>
+        <div class="st-bound st-bound-mini st-bound-left"></div>
+        <div class="st-bound st-bound-mini st-bound-right"></div>
       </div>
-    </form>
-  </div>
+
+      <div class="st-bottom">
+        <p><span class="st-things-t">s</span><span class="st-things-h">o</span><span class="st-things-i">l</span><span
+            class="st-things-n">v</span><span class="st-things-g">e</span><span class="st-things-s">r</span></p>
+      </div>
+
+    </div>
+
+    <div>
+      <form action="http://localhost:5000/puzzle" method="POST" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+          <input type="file" class="btn btn-light" id="file" name="file">
+          <input type="submit" class="btn btn-danger btn-sm">
+        </div>
+      </form>
+    </div>
   </main>
- 
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
@@ -56,22 +59,23 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-    <script type="text/javascript">
-      $(document).ready(
-      function(){
-          $('input:submit').attr('disabled',true);
-          $('input:file').change(
-              function(){
-                  if ($(this).val()){
-                      $('input:submit').removeAttr('disabled'); 
-                      document.getElementById("customLabel").innerHTML = $(this).val().split("\\").pop();
-                  }
-                  else {
-                      $('input:submit').attr('disabled',true);
-                  }
-              });
+  <script type="text/javascript">
+    $(document).ready(
+      function () {
+        $('input:submit').attr('disabled', true);
+        $('input:file').change(
+          function () {
+            if ($(this).val()) {
+              $('input:submit').removeAttr('disabled');
+              $('input:submit').removeClass('btn-danger')
+              $('input:submit').addClass('btn-success')
+            }
+            else {
+              $('input:submit').attr('disabled', true);
+            }
+          });
       });
-    </script>
+  </script>
 </body>
 
 </html>

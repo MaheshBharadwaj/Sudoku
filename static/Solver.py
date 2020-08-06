@@ -144,7 +144,7 @@ def main(path: str):
         print()
         print(en-st,"seconds")
         os.system("rm "+ROOT_DIR + '/temp/' + path)
-        return extracted_sudoku
+        return extracted_sudoku, solved_board
 
     except InsuffientArguments:
         print('Please enter filename of image as argument!', file=stderr)
