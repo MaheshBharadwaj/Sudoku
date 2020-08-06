@@ -22,7 +22,7 @@ def upload():
 
 		print('Filename: ', f.filename,'#')
 		board = solve(f.filename)
-		return "solved"
+		return render_template('print.html', board = board)
 		
 if __name__ == '__main__':
 	app.run(debug = True)

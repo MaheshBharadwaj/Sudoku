@@ -15,6 +15,8 @@ from time import time
 
 from static.source.Exceptions import *
 
+solved_board = [[]]
+
 class Sudoku():
     def __init__(self, board):
         self.board = board
@@ -37,6 +39,8 @@ class Sudoku():
         return self.solvable
 
     def Print_board(self):
+        global solved_board
+        solved_board = self.board
         for i in range(self.n):
             for j in range(self.n):
                 print(self.board[i][j], end = " ")
@@ -115,6 +119,7 @@ def get_input():
 
 
 def main(path: str):
+    global solved_board
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
     try:
         if not os.path.exists(ROOT_DIR + '/model.h5'):
@@ -128,6 +133,7 @@ def main(path: str):
 
         extracted_sudoku = utils.get_sudoku(ROOT_DIR + '/temp/' + path, model)
         sudoku = Sudoku(extracted_sudoku)
+        solved_board = extracted_sudoku
         sudoku.Print_board()
         print('\n\n')
         st = time()
@@ -138,6 +144,7 @@ def main(path: str):
         print()
         print(en-st,"seconds")
         os.system("rm "+ROOT_DIR + '/temp/' + path)
+        return extracted_sudoku
 
     except InsuffientArguments:
         print('Please enter filename of image as argument!', file=stderr)
@@ -149,7 +156,6 @@ def main(path: str):
     except FileNotFoundException as e:
         print(str(e), file=stderr)
 
-    return sudoku.board
 
 if __name__ == '__main__':
     main(argv[1])

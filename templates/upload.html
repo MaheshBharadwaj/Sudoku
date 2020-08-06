@@ -1,8 +1,26 @@
+<!doctype html>
 <html>
-   <body>
-      <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data" class="file-btn btn-lg btn-light">
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
-      </form>
-   </body>
+	<head>
+		<style>
+		table, th, td {
+		  border: 1px solid black;
+		  border-collapse: collapse
+		}
+
+		th, td {
+		  padding: 10px;
+		}
+		</style>
+	</head>
+	<body>
+		<table border = 2>
+			{% for i in range(9) %}
+		    <tr>
+			 	{% for j in range(9) %}
+			    	<td> {{ board[i][j] }} </td>
+			    {% endfor %}
+		    </tr>
+			{% endfor %}
+		</table>
+	</body>
 </html>
