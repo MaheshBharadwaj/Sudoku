@@ -23,6 +23,11 @@ def upload():
 		print('Filename: ', f.filename,'#')
 		board = solve(f.filename)
 		return render_template('print.html', board = board)
+
+@app.route('/check', methods = ['POST'])
+def check():
+	print()
+	return
 		
 if __name__ == '__main__':
 	app.run(debug = True)
