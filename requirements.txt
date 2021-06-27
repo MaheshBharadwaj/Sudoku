@@ -1,5 +1,5 @@
-tensorflow==2.5.0
+tensorflow-cpu==2.5.0
 pandas==1.2.5
-opencv-python==4.4.0.46
+opencv-python==4.5.2.54
 matplotlib==3.2.2
 flask==2.0.1
