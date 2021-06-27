@@ -18,7 +18,7 @@
 	</header>
 	<main>
 	<div class="box">
-	<form action="http://localhost:5000/check" method="POST" class="form" autocomplete="off">
+	<form action="/check" method="POST" class="form" autocomplete="off">
 		<table id="grid" border="1" style="border-collapse: collapse;">
 			{% for i in range(9) %}
 			<tr>
@@ -36,7 +36,7 @@
 		<div class="d-flex justify-content-center">
 			<div class="row">
 				<input class="btn btn-primary" type="submit" value="Submit" style="margin-right: 30px;">
-				<a href="http://localhost:5000/solution">
+				<a href="/solution">
 					<button type="button" class="btn btn-danger">View Solution</button>
 				</a>	
 			</div>
