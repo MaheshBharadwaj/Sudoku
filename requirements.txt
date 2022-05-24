@@ -1,4 +1,4 @@
-tensorflow-cpu==2.5.3
+tensorflow-cpu==2.6.4
 pandas==1.2.5
 opencv-python==4.5.2.54
 matplotlib==3.2.2
